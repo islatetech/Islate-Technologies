@@ -120,8 +120,7 @@ export default async function Home() {
       <section className="on-dark section bg-ink text-white">
         <div className="container-x grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
           <Reveal>
-            <p className="eyebrow">FAQ</p>
-            <h2 className="h2 mt-4">Frequently asked questions</h2>
+            <h2 className="h2">Frequently asked questions</h2>
             <p className="mt-4 max-w-xs text-[15px] leading-relaxed text-white/50">
               Answers to the questions we hear most. Cannot find what you are looking for? Reach out.
             </p>

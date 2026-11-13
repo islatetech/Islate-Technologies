@@ -1,4 +1,4 @@
-export type CategorySlug =
+type CategorySlug =
   | "flat-panel"
   | "digital-podium"
   | "floor-stand"
@@ -21,7 +21,7 @@ export interface ProductVariant {
   compareAt?: number;
 }
 
-export interface SpecGroup {
+interface SpecGroup {
   title: string;
   rows: { label: string; value: string }[];
 }
@@ -42,11 +42,7 @@ export interface Product {
   images: { src: string; alt: string; fit?: "cover" | "cutout" }[];
   specs: SpecGroup[];
   inStock: boolean;
-  featured?: boolean;
-  bestSeller?: boolean;
   isNew?: boolean;
-  /** Which products the original catalogue lists vs additions for the demo. */
-  source: "islate.in" | "demo";
 }
 
 export interface CartLine {

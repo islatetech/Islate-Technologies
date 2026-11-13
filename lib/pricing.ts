@@ -9,7 +9,7 @@ export interface Totals {
   savings: number;
 }
 
-export const coupons: Record<string, { percent: number; label: string }> = {
+const coupons: Record<string, { percent: number; label: string }> = {
   [site.firstOrderCoupon.code]: {
     percent: site.firstOrderCoupon.percent,
     label: `${site.firstOrderCoupon.percent}% off your first order`,

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useStore } from "./StoreProvider";
 import { CouponBox, Summary } from "./OrderSummary";
 import { Check, Shield } from "./Icons";
+import { Select } from "./Select";
 import type { Address, Order, PaymentMethod } from "@/lib/types";
 
 const states = [
@@ -154,21 +155,13 @@ export function CheckoutView() {
                   <label htmlFor="state" className="label">
                     State
                   </label>
-                  <select
+                  <Select
                     id="state"
                     name="state"
-                    defaultValue=""
-                    className="field"
-                    aria-invalid={!!err("state")}
-                    autoComplete="address-level1"
-                  >
-                    <option value="" disabled>
-                      Select state
-                    </option>
-                    {states.map((s) => (
-                      <option key={s}>{s}</option>
-                    ))}
-                  </select>
+                    placeholder="Select state"
+                    invalid={!!err("state")}
+                    options={states.map((s) => ({ value: s, label: s }))}
+                  />
                   {err("state") && <p className="mt-1.5 text-sm font-semibold text-[#d33]">{err("state")}</p>}
                 </div>
                 {input("pincode", "Pincode", { inputMode: "numeric", maxLength: 6, autoComplete: "postal-code" })}

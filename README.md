@@ -1,8 +1,8 @@
-# iSLate Technologies storefront
+# iSLate Technologies
 
-Premium e-commerce site for iSLate Technologies (smart boards for teachers). Built with Next.js (App Router), TypeScript and Tailwind CSS.
+E-commerce site for iSLate Technologies (smart boards for teachers). Built with Next.js (App Router), TypeScript and Tailwind CSS.
 
-Content (logo, company details, the flagship panel, specs, policies, coupon) was taken from https://islate.in. Extra products are demo data.
+Content (logo, company details, the flagship panel, specifications, policies, coupon) was taken from https://islate.in. The other products are demo data.
 
 ## Run
 
@@ -14,16 +14,19 @@ npm run build && npm start
 
 ## What is in the store
 
-- Home, Shop (filter, sort, search), Product detail (variants, gallery, specs, pincode check)
+- Home, Shop (category filter and sort), Product detail (sizes, gallery, specifications, pincode check)
 - Cart drawer and cart page, coupon (`CODE5OFF`, 5% off, from the original site)
 - Checkout with validation, order confirmation, order history and wishlist (`/orders`)
-- About, Contact, Privacy, Terms, Refund pages, custom 404
+- About, Contact, Privacy policy, Terms, Refund policy, custom 404
 
-## The 3D hero
+## Motion and 3D
 
-`components/hero/Hero3D.tsx` is a 430vh scroll story. The sticky stage holds a three.js scene (`Scene.tsx`): a procedurally modelled iSLate smart screen that tilts beside the headline, turns flat and fills the view while its specs appear, then swings to the other side. The lesson on its display is drawn to a canvas texture and revealed by the scroll position. Lenis (`SmoothScroll.tsx`) smooths the wheel and the scene follows the scroll with damping. Without WebGL, or with reduced motion, it falls back to a still product image.
+Three.js scenes (`@react-three/fiber`) draw a modelled iSLate smart screen. Lenis smooths the scroll for the whole site (`components/SmoothScroll.tsx`). Every scene falls back to a still image without WebGL, and everything stops for visitors who ask for reduced motion.
 
-To use a real model, replace the meshes in `Panel` with a `useGLTF` model of the panel.
+- `components/hero/` is the home hero. The screen follows the scroll and turns 360 degrees when you move across it.
+- `components/range/` is the curved track of products on the home page.
+- `components/audience/` is the four 3D products in "Made for the people who stand at the front of the room".
+- `components/about/` is the About page story. One screen moves between four scenes as you scroll.
 
 ## Architecture and how to scale it
 
@@ -42,5 +45,6 @@ To add a product, append an object to the `products` array in `lib/catalog.ts` a
 ## Assets
 
 - `public/brand/logo.*` is the official logo from islate.in. The palette (graphite, silver, white) is taken from it.
-- `public/images/products/*` are background-removed cut-outs of the iSLate range from the brand banner. The product card only lifts the cut-out on hover, the tile stays still.
-- `public/images/photos/*` are free Unsplash photographs used for the hero, audience tiles and before/after slider. Swap in the client's own photography before launch.
+- `public/images/products/*` are background-removed cut-outs of the iSLate range, made from the images on islate.in, and angled views made from them.
+- `public/images/hero-screen.webp` is the wallpaper from the iSLate panel photo. `screen.webp` and `screen-clean.webp` are the graphite screens used on the About page.
+- `public/images/photos/before.webp` and `after.webp` are free Unsplash photographs for the before and after slider on the home page. Swap in the client's own photographs before launch.

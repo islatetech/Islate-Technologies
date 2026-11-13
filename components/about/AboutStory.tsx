@@ -108,13 +108,15 @@ export function AboutStory({ phone, whatsapp }: { phone: string; whatsapp: strin
         <div ref={left} aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#0a0a0b_0%,rgba(10,10,11,0.78)_34%,rgba(10,10,11,0)_62%)] max-md:bg-[linear-gradient(180deg,rgba(10,10,11,0)_30%,rgba(10,10,11,0.85)_62%)]" style={{ opacity: 0.9 }} />
         <div ref={full} aria-hidden="true" className="pointer-events-none absolute inset-0 bg-ink" style={{ opacity: 0 }} />
 
-        {/* 1 · mission */}
+        {/* 1 · who we are (the islate.in text) */}
         <div data-layer="0" className="absolute inset-0 z-10 flex items-end px-[max(1.25rem,4vw)] pb-[12svh] md:items-center md:pb-0 md:pt-[var(--header-h)]">
           <div className="max-w-xl">
-            <h1 className="text-[clamp(2.6rem,6vw,5.4rem)] font-bold leading-[1.02] tracking-[-0.04em]">Teaching, transformed.</h1>
-            <p className="mt-5 max-w-md text-[16px] leading-relaxed text-white/65">
-              Our mission is to transform teaching styles by providing smart education solutions to teachers, coaching
-              centres, schools and corporates, and to revolutionize the education equipment supply industry.
+            <h1 className="text-[clamp(2.6rem,6vw,5.4rem)] font-bold leading-[1.02] tracking-[-0.04em]">Who we are</h1>
+            {/* Word for word from https://islate.in/elm-about-us/ */}
+            <p className="mt-6 max-w-xl text-[clamp(1.05rem,1.35vw,1.2rem)] leading-[1.65] text-white/75">
+              &quot;At Islate Technologies Pvt Ltd, our mission is to transform teaching styles by providing smart
+              education solutions to teachers, coaching centers, schools, and corporates, revolutionizing the education
+              equipment supply industry.&quot;
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link href="/shop" className="btn btn-light">

@@ -6,7 +6,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { Category, Product } from "@/lib/types";
 import { ProductCard } from "./ProductCard";
 import { lowestPrice } from "@/lib/cartline";
-import { ChevronDown, CloseIcon } from "./Icons";
+import { CloseIcon } from "./Icons";
+import { Select } from "./Select";
 
 const sorts = [
   { id: "featured", label: "Featured" },
@@ -67,23 +68,16 @@ export function ShopView({ products, categories }: { products: Product[]; catego
               </span>
             </p>
           </div>
-          <label className="flex shrink-0 items-center gap-3 text-sm">
+          <div className="flex shrink-0 items-center gap-3 text-sm">
             <span className="font-medium text-muted">Sort by</span>
-            <span className="relative">
-              <select
-                value={sort}
-                onChange={(e) => setParam("sort", e.target.value)}
-                className="h-11 cursor-pointer appearance-none rounded-full border border-ink/10 bg-white pl-5 pr-11 font-medium outline-none transition-colors hover:border-ink focus:border-ink"
-              >
-                {sorts.map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.label}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown size={18} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2" />
-            </span>
-          </label>
+            <Select
+              variant="pill"
+              ariaLabel="Sort products"
+              value={sort}
+              onChange={(val) => setParam("sort", val)}
+              options={sorts.map((s) => ({ value: s.id, label: s.label }))}
+            />
+          </div>
         </div>
 
         <div className="no-scrollbar mt-7 flex gap-2 overflow-x-auto" role="tablist" aria-label="Categories">

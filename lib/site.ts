@@ -2,8 +2,6 @@
 export const site = {
   name: "iSLate Technologies",
   legalName: "Islate Technologies Pvt Ltd",
-  mission:
-    "At Islate Technologies Pvt Ltd, our mission is to transform teaching styles by providing smart education solutions to teachers, coaching centers, schools, and corporates, revolutionizing the education equipment supply industry.",
   phone: "+91-99-7171-6268",
   phoneHref: "tel:+919971716268",
   whatsapp: "919971716268",

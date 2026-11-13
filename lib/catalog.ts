@@ -1,4 +1,4 @@
-import type { Category, CategorySlug, Product } from "./types";
+import type { Category, Product } from "./types";
 import { categories } from "./categories";
 
 /**
@@ -85,9 +85,6 @@ const products: Product[] = [
     ],
     specs: flatPanelSpecs,
     inStock: true,
-    featured: true,
-    bestSeller: true,
-    source: "islate.in",
   },
   {
     id: "d-1002",
@@ -137,8 +134,6 @@ const products: Product[] = [
       },
     ],
     inStock: true,
-    bestSeller: true,
-    source: "demo",
   },
   {
     id: "d-1003",
@@ -186,7 +181,6 @@ const products: Product[] = [
     ],
     inStock: true,
     isNew: true,
-    source: "demo",
   },
   {
     id: "d-1004",
@@ -225,8 +219,6 @@ const products: Product[] = [
       },
     ],
     inStock: true,
-    featured: true,
-    source: "demo",
   },
   {
     id: "d-1005",
@@ -265,8 +257,6 @@ const products: Product[] = [
       },
     ],
     inStock: true,
-    bestSeller: true,
-    source: "demo",
   },
   {
     id: "d-1006",
@@ -305,7 +295,6 @@ const products: Product[] = [
     ],
     inStock: true,
     isNew: true,
-    source: "demo",
   },
 ];
 
@@ -317,23 +306,8 @@ export async function getCategories(): Promise<Category[]> {
   return categories;
 }
 
-export async function getCategory(slug: string): Promise<Category | undefined> {
-  return categories.find((c) => c.slug === slug);
-}
-
-export async function getProducts(filter?: {
-  category?: CategorySlug;
-  featured?: boolean;
-  bestSeller?: boolean;
-  isNew?: boolean;
-}): Promise<Product[]> {
-  return products.filter((p) => {
-    if (filter?.category && !p.categories.includes(filter.category)) return false;
-    if (filter?.featured && !p.featured) return false;
-    if (filter?.bestSeller && !p.bestSeller) return false;
-    if (filter?.isNew && !p.isNew) return false;
-    return true;
-  });
+export async function getProducts(): Promise<Product[]> {
+  return products;
 }
 
 export async function getProduct(slug: string): Promise<Product | undefined> {
@@ -344,12 +318,4 @@ export async function getRelatedProducts(product: Product, limit = 4): Promise<P
   return products
     .filter((p) => p.id !== product.id && p.categories.some((c) => product.categories.includes(c)))
     .slice(0, limit);
-}
-
-export async function searchProducts(query: string): Promise<Product[]> {
-  const q = query.trim().toLowerCase();
-  if (!q) return [];
-  return products.filter((p) =>
-    [p.name, p.tagline, p.summary, ...p.categories].join(" ").toLowerCase().includes(q),
-  );
 }

@@ -34,7 +34,12 @@ export function SlideNav({
   // cursor never re-renders the nav.
   const place = useCallback((i: number, showHighlight: boolean) => {
     const el = refs.current[i];
-    if (!el) return;
+    if (!el) {
+      // not a page in the nav: no highlight and no underline
+      if (hl.current) hl.current.style.opacity = "0";
+      if (ul.current) ul.current.style.opacity = "0";
+      return;
+    }
     const left = el.offsetLeft;
     const width = el.offsetWidth;
     if (hl.current) {

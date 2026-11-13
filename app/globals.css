@@ -19,7 +19,6 @@
   --muted: #5d6169;
   --ok: #17803d;
   --nav-h: 72px;
-  --bar-h: 36px;
   --header-h: 108px;
 
   --chrome: linear-gradient(
@@ -37,10 +36,7 @@
   --color-graphite: var(--graphite);
   --color-steel: var(--steel);
   --color-silver: var(--silver);
-  --color-silver-deep: var(--silver-deep);
-  --color-paper: var(--paper);
   --color-mist: var(--mist);
-  --color-stone: var(--stone);
   --color-shelf: var(--shelf);
   --color-line: var(--line);
   --color-muted: var(--muted);
@@ -300,6 +296,47 @@ textarea.field {
   }
 }
 
+/* The band of coloured light under the search field */
+.search-glow {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -3px;
+  height: 24px;
+  pointer-events: none;
+  opacity: 0;
+  filter: blur(4px);
+  background:
+    radial-gradient(34px 15px at 14% 100%, rgba(255, 70, 190, 1), transparent 72%),
+    radial-gradient(42px 15px at 34% 100%, rgba(70, 190, 255, 1), transparent 72%),
+    radial-gradient(38px 15px at 54% 100%, rgba(170, 110, 255, 1), transparent 72%),
+    radial-gradient(40px 15px at 74% 100%, rgba(255, 200, 80, 0.95), transparent 72%),
+    radial-gradient(34px 15px at 92% 100%, rgba(90, 255, 190, 0.95), transparent 72%);
+  background-size: 200% 100%;
+  animation: search-glow 6s ease-in-out infinite;
+  transition: opacity 0.6s;
+}
+.search-glow.is-on {
+  animation-duration: 3.2s;
+}
+@keyframes search-glow {
+  0% {
+    opacity: 0;
+    background-position: 0% 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 0.55;
+    background-position: 100% 0;
+  }
+  100% {
+    opacity: 0;
+    background-position: 200% 0;
+  }
+}
+
 @keyframes rise {
   from {
     opacity: 0;
@@ -339,11 +376,30 @@ details[open] .faq-icon {
 }
 
 /* Prose for legal pages */
+.prose-islate {
+  counter-reset: section;
+}
 .prose-islate h2 {
-  font-size: 1.4rem;
+  counter-increment: section;
+  font-size: 1.45rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  margin: 2.2rem 0 0.6rem;
+  margin: 3.5rem 0 0.9rem;
+  scroll-margin-top: 150px;
+}
+.prose-islate h2:first-child {
+  margin-top: 0;
+}
+.prose-islate h2::before {
+  content: counter(section) ". ";
+  color: var(--silver-deep);
+  font-variant-numeric: tabular-nums;
+}
+.prose-islate h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 1.75rem 0 0.5rem;
 }
 .prose-islate p,
 .prose-islate li {
@@ -368,6 +424,10 @@ details[open] .faq-icon {
 @media (prefers-reduced-motion: reduce) {
   .wave-layer {
     animation: none !important;
+  }
+  .search-glow {
+    animation: none !important;
+    opacity: 0.35 !important;
   }
   *,
   *::before,

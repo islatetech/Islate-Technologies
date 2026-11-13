@@ -80,9 +80,7 @@ interface StoreContext {
   orders: Order[];
   wishlist: string[];
   drawerOpen: boolean;
-  searchOpen: boolean;
   setDrawerOpen: (open: boolean) => void;
-  setSearchOpen: (open: boolean) => void;
   addToCart: (line: Omit<CartLine, "qty">, qty?: number, openDrawer?: boolean) => void;
   setQty: (key: string, qty: number) => void;
   removeLine: (key: string) => void;
@@ -103,7 +101,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     hydrated: false,
   });
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -145,9 +142,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       orders: state.orders,
       wishlist: state.wishlist,
       drawerOpen,
-      searchOpen,
       setDrawerOpen,
-      setSearchOpen,
       addToCart,
       setQty: (key, qty) => dispatch({ type: "qty", key, qty }),
       removeLine: (key) => dispatch({ type: "remove", key }),
@@ -157,7 +152,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       toggleWishlist: (id) => dispatch({ type: "wish", id }),
       saveOrder: (order) => dispatch({ type: "order", order }),
     }),
-    [state, drawerOpen, searchOpen, addToCart, applyCoupon],
+    [state, drawerOpen, addToCart, applyCoupon],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
