@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local tooling and scratch work (screenshots, reference frames, scripts)
+/_scrape/
+/.playwright-mcp/
+
+# assistant tooling and installed design skills
+/.claude/
+
+# editor and OS files
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+*.log

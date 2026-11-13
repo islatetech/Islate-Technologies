@@ -1,26 +1,385 @@
 @import "tailwindcss";
 
+/*
+  Palette is taken from the iSLate logo: polished chrome, graphite and black.
+  There is deliberately no brand "colour". Photography and the products
+  supply the colour, the interface stays quiet.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #0a0a0b;
+  --graphite: #17181b;
+  --steel: #2a2c31;
+  --silver: #c5c8ce;
+  --silver-deep: #8d9199;
+  --paper: #ffffff;
+  --mist: #f3f4f5;
+  --stone: #ebecee;
+  --shelf: #f2f1ee;
+  --line: #e3e4e7;
+  --muted: #5d6169;
+  --ok: #17803d;
+  --nav-h: 72px;
+  --bar-h: 36px;
+  --header-h: 108px;
+
+  --chrome: linear-gradient(
+    115deg,
+    #f4f5f7 0%,
+    #b4b8bf 28%,
+    #f1f2f4 46%,
+    #8e939b 72%,
+    #e6e8eb 100%
+  );
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-graphite: var(--graphite);
+  --color-steel: var(--steel);
+  --color-silver: var(--silver);
+  --color-silver-deep: var(--silver-deep);
+  --color-paper: var(--paper);
+  --color-mist: var(--mist);
+  --color-stone: var(--stone);
+  --color-shelf: var(--shelf);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --color-ok: var(--ok);
+  --font-sans: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--ink);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.on-dark :focus-visible,
+.on-dark:focus-visible {
+  outline-color: #fff;
+}
+
+/*
+  Text fields show focus with their own border, never with the page-wide ring.
+  Every field below has a border or shadow change on :focus, so focus stays visible.
+*/
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.on-dark input:focus-visible,
+.on-dark textarea:focus-visible,
+.on-dark select:focus-visible {
+  outline: none;
+}
+
+.container-x {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 48px);
+}
+
+/* Vertical rhythm: one consistent section spacing, no oversized gaps */
+.section {
+  padding-block: clamp(48px, 6vw, 88px);
+}
+.section-tight {
+  padding-block: clamp(32px, 4vw, 56px);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 50px;
+  padding-inline: 26px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 15px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.25s var(--ease-out-expo),
+    color 0.25s var(--ease-out-expo),
+    border-color 0.25s var(--ease-out-expo),
+    transform 0.25s var(--ease-out-expo);
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btn[disabled] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+.btn-primary,
+.btn-dark {
+  background: var(--ink);
+  color: #fff;
+}
+.btn-primary:hover,
+.btn-dark:hover {
+  background: var(--steel);
+}
+.btn-light {
+  background: #fff;
+  color: var(--ink);
+}
+.btn-light:hover {
+  background: var(--stone);
+}
+.btn-outline {
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+}
+.btn-outline:hover {
+  background: var(--ink);
+  color: #fff;
+}
+.btn-outline-light {
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+.btn-outline-light:hover {
+  background: #fff;
+  color: var(--ink);
+}
+.btn-sm {
+  height: 42px;
+  padding-inline: 20px;
+  font-size: 14px;
+}
+
+/* Form controls */
+.field {
+  width: 100%;
+  height: 50px;
+  padding-inline: 16px;
+  border-radius: 10px;
+  border: 1.5px solid var(--line);
+  background: #fff;
+  font-size: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field:hover {
+  border-color: #c9cbd0;
+}
+.field:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 4px rgba(10, 10, 11, 0.08);
+}
+textarea.field {
+  height: auto;
+  padding-block: 14px;
+  resize: vertical;
+}
+.label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Type */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--silver-deep);
+}
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: var(--chrome);
+  border-radius: 2px;
+}
+.display {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+.h2 {
+  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+.chrome-text {
+  background: var(--chrome);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.8s var(--ease-out-expo),
+    transform 0.8s var(--ease-out-expo);
+  transition-delay: var(--d, 0ms);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/*
+  Product "pop". The tile stays put, only the product lifts off it.
+  Applies to cut-out product images, never to photographs.
+*/
+.pop {
+  filter: drop-shadow(0 14px 14px rgba(10, 10, 11, 0.14));
+  transition:
+    transform 0.55s var(--ease-out-expo),
+    filter 0.55s var(--ease-out-expo);
+  will-change: transform;
+}
+.group:hover .pop,
+.group:focus-within .pop {
+  transform: translateY(-8px) scale(1.045);
+  filter: drop-shadow(0 30px 26px rgba(10, 10, 11, 0.2));
+}
+
+/* Shelf: products stand on a thin light slab, like a shop display */
+.shelf {
+  position: absolute;
+  left: -16px;
+  right: -16px;
+  bottom: 0;
+  height: 14px;
+  background: linear-gradient(180deg, #ffffff 0%, #f6f5f2 100%);
+  box-shadow: 0 12px 20px -10px rgba(10, 10, 11, 0.16), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  border-radius: 2px;
+}
+
+/* Drag-to-turn stage idle sway */
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotateY(-9deg);
+  }
+  50% {
+    transform: rotateY(9deg);
+  }
+}
+
+/* Wave edge that drifts sideways, seamless because the path repeats twice */
+@keyframes wave-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  opacity: 0;
+  animation: rise 0.9s var(--ease-out-expo) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/* FAQ */
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .faq-icon {
+  transform: rotate(45deg);
+}
+.acc[open] .acc-icon {
+  transform: rotate(180deg);
+}
+
+/* Prose for legal pages */
+.prose-islate h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 2.2rem 0 0.6rem;
+}
+.prose-islate p,
+.prose-islate li {
+  color: #3d4048;
+  line-height: 1.8;
+  font-size: 1.02rem;
+}
+.prose-islate p {
+  margin-bottom: 1rem;
+}
+.prose-islate ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+}
+.prose-islate a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-layer {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal,
+  .rise {
+    opacity: 1;
+    transform: none;
+  }
 }

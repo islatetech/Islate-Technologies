@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# iSLate Technologies storefront
 
-## Getting Started
+Premium e-commerce site for iSLate Technologies (smart boards for teachers). Built with Next.js (App Router), TypeScript and Tailwind CSS.
 
-First, run the development server:
+Content (logo, company details, the flagship panel, specs, policies, coupon) was taken from https://islate.in. Extra products are demo data.
+
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build && npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What is in the store
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Home, Shop (filter, sort, search), Product detail (variants, gallery, specs, pincode check)
+- Cart drawer and cart page, coupon (`CODE5OFF`, 5% off, from the original site)
+- Checkout with validation, order confirmation, order history and wishlist (`/orders`)
+- About, Contact, Privacy, Terms, Refund pages, custom 404
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## The 3D hero
 
-## Learn More
+`components/hero/Hero3D.tsx` is a 430vh scroll story. The sticky stage holds a three.js scene (`Scene.tsx`): a procedurally modelled iSLate smart screen that tilts beside the headline, turns flat and fills the view while its specs appear, then swings to the other side. The lesson on its display is drawn to a canvas texture and revealed by the scroll position. Lenis (`SmoothScroll.tsx`) smooths the wheel and the scene follows the scroll with damping. Without WebGL, or with reduced motion, it falls back to a still product image.
 
-To learn more about Next.js, take a look at the following resources:
+To use a real model, replace the meshes in `Panel` with a `useGLTF` model of the panel.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Architecture and how to scale it
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Concern | Where | Going live |
+| --- | --- | --- |
+| Product data | `lib/catalog.ts` (async functions) | Replace the function bodies with WooCommerce, Shopify, a CMS or a database. Pages do not change. |
+| Categories | `lib/categories.ts` | Same, or fetch from the backend. |
+| Pricing and coupons | `lib/pricing.ts` | Move coupon rules to the backend. |
+| Orders | `app/api/orders/route.ts` | Re-prices from the catalogue on the server. Add a database write and a payment gateway here. |
+| Contact form | `app/api/contact/route.ts` | Connect email or CRM. |
+| Cart, wishlist, order history | `components/StoreProvider.tsx` | Stored in the browser for the demo. Swap for user accounts and server persistence. |
+| Company details | `lib/site.ts` | Single source for phone, email, address, nav and footer links. |
 
-## Deploy on Vercel
+To add a product, append an object to the `products` array in `lib/catalog.ts` and drop its images in `public/images/products`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Assets
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `public/brand/logo.*` is the official logo from islate.in. The palette (graphite, silver, white) is taken from it.
+- `public/images/products/*` are background-removed cut-outs of the iSLate range from the brand banner. The product card only lifts the cut-out on hover, the tile stays still.
+- `public/images/photos/*` are free Unsplash photographs used for the hero, audience tiles and before/after slider. Swap in the client's own photography before launch.
