@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AboutStory } from "@/components/about/AboutStory";
+import { ScrollExpandIntro } from "@/components/about/ScrollExpandIntro";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -9,5 +10,10 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  return <AboutStory phone={site.phone} whatsapp={site.whatsapp} />;
+  return (
+    <>
+      <ScrollExpandIntro />
+      <AboutStory phone={site.phone} whatsapp={site.whatsapp} />
+    </>
+  );
 }

@@ -1,7 +1,7 @@
 /** Company details taken from the footer of https://islate.in */
 export const site = {
   name: "iSLate Technologies",
-  legalName: "Islate Technologies Pvt Ltd",
+  legalName: "iSLate Technologies Private Limited",
   phone: "+91-99-7171-6268",
   phoneHref: "tel:+919971716268",
   whatsapp: "919971716268",

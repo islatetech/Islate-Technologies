@@ -27,7 +27,7 @@ const faqs = [
   },
   {
     q: "Which apps does it run?",
-    a: "The panel runs Google certified Android 13, so the education and meeting apps you already use can be installed on it directly.",
+    a: "The panel runs Google EDLA certified Android 16 on an octa-core processor with 8 GB RAM and 128 GB storage, so the education and meeting apps you already use can be installed on it directly.",
   },
   {
     q: "Do you help with installation?",

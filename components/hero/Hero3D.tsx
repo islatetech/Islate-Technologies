@@ -18,8 +18,8 @@ const window3 = (p: number, a: number, b: number) => smooth(a, a + 0.04, p) * (1
 
 const captions = [
   { range: [0.32, 0.46] as const, big: "4K", small: "UHD display, sharp from the last bench" },
-  { range: [0.46, 0.6] as const, big: "50", small: "touch points, so a whole group can write at once" },
-  { range: [0.6, 0.76] as const, big: "Android 13", small: "built in, with 8 GB RAM and 128 GB storage" },
+  { range: [0.46, 0.6] as const, big: "Octa-core", small: "64-bit processor with 8 GB RAM, lag-free all lesson long" },
+  { range: [0.6, 0.76] as const, big: "Android 16", small: "built in, EDLA certified, with 128 GB storage" },
 ];
 
 
@@ -33,7 +33,6 @@ export function Hero3D() {
   const section = useRef<HTMLElement>(null);
   const intro = useRef<HTMLDivElement>(null);
   const outro = useRef<HTMLDivElement>(null);
-  const hint = useRef<HTMLDivElement>(null);
   const caps = useRef<(HTMLDivElement | null)[]>([]);
   const mode = useCan3d();
   const is3d = mode !== false;
@@ -61,7 +60,6 @@ export function Hero3D() {
       intro.current.style.opacity = String(o);
       intro.current.style.transform = `translate3d(0, ${-smooth(0.04, 0.24, p) * 36}px, 0)`;
     }
-    if (hint.current) hint.current.style.opacity = String(1 - smooth(0.0, 0.06, p));
     captions.forEach((c, i) => {
       const el = caps.current[i];
       if (!el) return;
@@ -175,13 +173,6 @@ export function Hero3D() {
                 Explore the range <ArrowRight size={18} />
               </Link>
             </div>
-          </div>
-        )}
-
-        {is3d && (
-          <div ref={hint} className="pointer-events-none absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-center text-[12px] uppercase tracking-[0.18em] text-white/45">
-            Scroll
-            <span className="mx-auto mt-2 block h-8 w-px bg-gradient-to-b from-white/50 to-transparent" />
           </div>
         )}
       </div>

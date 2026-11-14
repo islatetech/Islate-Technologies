@@ -24,7 +24,6 @@ export const metadata: Metadata = {
   },
   description:
     "Interactive flat panels, digital podiums, PTZ cameras and studio setups for teachers, coaching centres, schools and corporates.",
-  icons: { icon: "/brand/logo.png" },
 };
 
 export const viewport: Viewport = {
